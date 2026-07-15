@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false, length = 50)
     private String name;
