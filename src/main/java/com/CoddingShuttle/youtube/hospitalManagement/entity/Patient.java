@@ -2,14 +2,14 @@ package com.CoddingShuttle.youtube.hospitalManagement.entity;
 
 import com.CoddingShuttle.youtube.hospitalManagement.type.BloodGroupType;
 import jakarta.persistence.*;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@ToString
 @Table(
         name = "patient",
         uniqueConstraints = {
@@ -20,6 +20,11 @@ import java.time.LocalDateTime;
         }
 
 )
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,5 +47,12 @@ public class Patient {
 
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
+
+    @JoinColumn(name = "patient_insurance_id")      //owning side
+    @OneToOne(cascade = CascadeType.ALL)
+    private Insurance insurance;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
 
 }
